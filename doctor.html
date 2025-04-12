@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Doctor Login</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #cce7ff, #e6f2ff);
+      background-image: url('hospital images/doctor.avif');
+      background-size: cover;
+      background-repeat: no-repeat;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #005c99;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #003d66;
+    }
+
+    input[type="tel"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #a3cde3;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #3399ff;
+      box-shadow: 0 0 5px #66b3ff;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      background-color: #3399ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1a8cff;
+    }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #004d80;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Doctor Login</h2>
+    <form>
+      <label for="Name">Name/Login ID</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter your Name/Login Id" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required />
+
+      <div class="buttons">
+        <button type="submit">Login</button>
+        <button type="button" onclick="window.location.href='doctor signin.html'">Sign In</button>
+      </div>
+    </form>
+    <div class="footer">
+      For first-time users, please click "Sign In"
+    </div>
+  </div>
+</body>
+</html>
+
