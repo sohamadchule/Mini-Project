@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prescription</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: #ffffff;
+      padding: 40px;
+      color: #2c3e50;
+    }
+
+    .prescription-box {
+      max-width: 700px;
+      margin: auto;
+      padding: 30px;
+      border: 2px solid #2c3e50;
+      border-radius: 8px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .info {
+      margin-bottom: 15px;
+    }
+
+    .label {
+      font-weight: bold;
+    }
+
+    .print-btn {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    @media print {
+      button {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="prescription-box">
+    <h1>CityCare Hospital</h1>
+    <h2>Patient Prescription</h2>
+
+    <div class="info"><span class="label">Patient Name:</span> <span id="pname"></span></div>
+    <div class="info"><span class="label">Age:</span> <span id="age"></span></div>
+    <div class="info"><span class="label">Symptoms:</span> <span id="symptoms"></span></div>
+    <div class="info"><span class="label">Medicine:</span> <span id="medicine"></span></div>
+    <div class="info"><span class="label">Dosage:</span> <span id="dosage"></span></div>
+
+    <div class="print-btn">
+      <button onclick="window.print()">Print as PDF</button>
+    </div>
+  </div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem("prescriptionData"));
+
+    if (data) {
+      document.getElementById('pname').textContent = data.name;
+      document.getElementById('age').textContent = data.age;
+      document.getElementById('symptoms').textContent = data.symptoms;
+      document.getElementById('medicine').textContent = data.medicine;
+      document.getElementById('dosage').textContent = data.dosage;
+    } else {
+      document.body.innerHTML = "<h2>No data found. Please go back and fill the form.</h2>";
+    }
+  </script>
+
+</body>
+</html>

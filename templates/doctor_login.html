@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('your-bg-image.jpg') no-repeat center center/cover;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      margin: 60px auto;
+      padding: 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 1000px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      text-align: center;
+      color: #004c8c;
+    }
+
+    .search-section {
+      display: flex;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .search-section input {
+      padding: 10px;
+      width: 60%;
+      border: 1px solid #ccc;
+      border-radius: 6px 0 0 6px;
+      font-size: 16px;
+    }
+
+    .search-section button {
+      padding: 10px 20px;
+      background-color: #004c8c;
+      color: white;
+      border: none;
+      border-radius: 0 6px 6px 0;
+      cursor: pointer;
+    }
+
+    .history-box, .prescription-box {
+      margin-top: 30px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    .medicine-entry {
+      background-color: #f1f9ff;
+      padding: 15px;
+      border: 2px solid #cce5ff;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .medicine-name {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .timing, .days {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .timing label, .days label {
+      font-size: 14px;
+      background-color: #e6f0ff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .prescribe {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #0f6e4f;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .prescribe:hover {
+      background-color: #0b573f;
+    }
+
+    button.add-medicine {
+      background-color: #007bff;
+      margin-top: 10px;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button.add-medicine:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Welcome, Doctor</h2>
+
+  <!-- Patient Search -->
+  <div class="search-section">
+    <input type="text" id="searchInput" placeholder="Enter Patient Name or ID">
+    <button onclick="fetchPatientHistory()">Search</button>
+  </div>
+
+  <!-- Patient History -->
+  <div class="history-box">
+    <h3>Patient History</h3>
+    <textarea id="history" rows="6" placeholder="Patient history will appear here..." readonly></textarea>
+  </div>
+
+  <!-- Digital Prescription -->
+  <div class="prescription-box">
+    <h3>Digital Prescription</h3>
+
+    <div id="medicine-container">
+      <div class="medicine-entry">
+        <input type="text" class="medicine-name" placeholder="Medicine Name" oninput="suggestMedicines(this)" list="medicines">
+
+        <div class="timing">
+          <label><input type="checkbox"> Morning</label>
+          <label><input type="checkbox"> Afternoon</label>
+          <label><input type="checkbox"> Evening</label>
+        </div>
+
+        <div class="days">
+          <label><input type="checkbox"> Mon</label>
+          <label><input type="checkbox"> Tue</label>
+          <label><input type="checkbox"> Wed</label>
+          <label><input type="checkbox"> Thu</label>
+          <label><input type="checkbox"> Fri</label>
+          <label><input type="checkbox"> Sat</label>
+          <label><input type="checkbox"> Sun</label>
+        </div>
+      </div>
+    </div>
+
+    <button class="add-medicine" onclick="addMedicineField()">➕ Add Medicine</button>
+    <button class="prescribe">Submit Prescription</button>
+  </div>
+</div>
+
+<datalist id="medicines"></datalist>
+
+<script>
+  const dummyHistory = {
+    'Ravi': 'Visited for fever on 10 March 2024. Diagnosed with viral infection.',
+    'Anjali': 'Follow-up for diabetes checkup on 12 April 2024.',
+    'Netra': 'Headache and low BP reported on 5 Feb 2024. Medication prescribed.'
+  };
+
+  const medicineList = ["Paracetamol", "Ibuprofen", "Amoxicillin", "Azithromycin", "Cetirizine", "Ciprofloxacin", "Dolo", "Domperidone", "Pantoprazole", "Ranitidine"];
+
+  function fetchPatientHistory() {
+    const name = document.getElementById('searchInput').value.trim();
+    const historyBox = document.getElementById('history');
+    historyBox.value = dummyHistory[name] || `No patient history found for "${name}".`;
+  }
+
+  function suggestMedicines(input) {
+    const value = input.value.toLowerCase();
+    const suggestions = medicineList.filter(med => med.toLowerCase().startsWith(value));
+    const dataList = document.getElementById("medicines");
+    dataList.innerHTML = "";
+    suggestions.forEach(med => {
+      const option = document.createElement("option");
+      option.value = med;
+      dataList.appendChild(option);
+    });
+  }
+
+  function addMedicineField() {
+    const container = document.getElementById('medicine-container');
+    const newEntry = container.firstElementChild.cloneNode(true);
+    newEntry.querySelector('.medicine-name').value = '';
+    container.appendChild(newEntry);
+  }
+</script>
+
+</body>
+</html>
